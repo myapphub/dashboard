@@ -4,6 +4,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { UserRoutingModule, routedComponents } from './user-routing.module';
 import { HeaderComponent } from './components/header/header.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { UserComponent } from './components/user/user.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 
 @NgModule({
@@ -18,7 +20,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NgbModule
   ],
   exports: [
-    HeaderComponent
+    HeaderComponent,
+    UserComponent,
+    NotFoundComponent
   ]
 })
 export class UserModule { }

@@ -8,6 +8,8 @@ import { AppComponent } from './app.component';
 import { TokenInterceptor } from './user/services/interceptors/token.interceptor';
 import { UserModule } from './user/user.module';
 import { ApplicationModule } from './application/application.module';
+import { OrganizationModule } from './organization/organization.module';
+import { HomeModule } from './home/home.module';
 
 @NgModule({
   declarations: [
@@ -18,8 +20,10 @@ import { ApplicationModule } from './application/application.module';
     HttpClientModule,
     NgbModule,
     ApplicationModule,
+    OrganizationModule,
+    HomeModule,
     UserModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [
     {

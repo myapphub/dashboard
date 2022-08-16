@@ -6,10 +6,12 @@ export interface User {
   email: string;
   email_verified: boolean;
   token: string;
+  new_user: boolean;
 }
 
 export interface LoginRequest {
-  account: string;
+  username?: string;
+  email?: string;
   password: string;
 }
 

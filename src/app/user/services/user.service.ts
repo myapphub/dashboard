@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 import { User, LoginRequest, RegisterRequest } from '../models/user';
 import { environment } from '../../../environments/environment';
+import { AuthConfig, SocialLoginLink } from '../models/config';
 
 
 @Injectable({
@@ -22,6 +23,39 @@ export class UserService {
     this.token = localStorage.getItem(this.key) ?? '';
     this.publishTokenChanged();
     this.publishAuthenticationChanged();
+  }
+
+  getAuthConfig(): Observable<AuthConfig> {
+    const url = this.buildURL('/user/auth/config');
+    return this.http.get(url)
+      .pipe(map(res => {
+          return res as AuthConfig;
+        }),
+      );
+  }
+
+  getSocialLoginLink(social: string): Observable<SocialLoginLink> {
+    const url = this.buildURL(`/user/${social}/login`);
+    return this.http.get(url)
+      .pipe(map(res => {
+          return res as SocialLoginLink;
+        }),
+      );
+  }
+
+  social_authenticate(social: string, code: string): Observable<User> {
+    const url = this.buildURL(`/user/${social}/login`);
+    return this.http.post(url, {code: code})
+      .pipe(map(res => {
+        this.user = res as User;
+        this.token = this.user.token;
+        this.saveToken(this.user.token);
+        this.publishTokenChanged();
+        this.publishAuthenticationChanged();
+        this.publishUserUpdated();
+        return this.user;
+      }),
+    );    
   }
 
   getToken(): string {
@@ -74,6 +108,14 @@ export class UserService {
     );
   }
 
+  register_verify_email(code: string): Observable<void> {
+    const url = this.buildURL(`/user/register/verify_email`);
+    return this.http.post(url, {key: code})
+      .pipe(map(res => {
+
+      }));
+  }
+
   logout(): Observable<void> {
     const url = this.buildURL('/user/logout');
     return this.http.delete(url)
@@ -84,7 +126,16 @@ export class UserService {
         this.publishTokenChanged();
         this.publishAuthenticationChanged();
         this.publishUserUpdated();
-      })
+      }),
+      catchError(err => {
+        this.removeToken();
+        this.token = '';
+        this.user = undefined;
+        this.publishTokenChanged();
+        this.publishAuthenticationChanged();
+        this.publishUserUpdated();
+        return throwError(() => err);
+      }),
     );
   }
 

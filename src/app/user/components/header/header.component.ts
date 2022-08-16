@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { User } from '../../models/user';
@@ -14,7 +14,7 @@ export interface HeaderNavLink {
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   
   @Input() links: HeaderNavLink[] = [];
 
@@ -48,8 +48,13 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     this.userService.logout()
-      .subscribe(x => {
-        this.router.navigateByUrl('user/login');
+      .subscribe({
+        error: (error) => {
+          this.router.navigateByUrl('user/login');
+        },
+        complete: () => {
+          this.router.navigateByUrl('user/login');
+        }
       });
   }
 }

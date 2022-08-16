@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  external_api_url: ''
+  external_api_url: 'api',
 };
 
 /*
