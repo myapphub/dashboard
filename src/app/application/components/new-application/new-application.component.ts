@@ -92,7 +92,7 @@ export class NewApplicationComponent implements OnInit, OnDestroy {
       path: this.appForm.value.namespace
     };
 
-    if (this.appForm.value.namespace === 'user') {
+    if (this.appForm.value.namespace === 'user' || this.appForm.value.namespace === '') {
       namespace.kind = NamespaceKind.User;
       namespace.path = this.user?.username ?? '';
     }

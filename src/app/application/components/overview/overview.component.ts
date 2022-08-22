@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Application } from '../../models/application';
+import { ApplicationService } from '../../services/application.service';
 
 @Component({
   selector: 'app-overview',
@@ -7,9 +10,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OverviewComponent implements OnInit {
 
-  constructor() { }
+  app$?: Observable<Application | undefined>;
+
+  constructor(
+    private service: ApplicationService
+  ) { }
 
   ngOnInit(): void {
+    this.app$ = this.service.onAppChanged();
+
   }
 
 }

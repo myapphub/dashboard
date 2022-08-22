@@ -1,1 +1,6 @@
-<p>overview works!</p>
+<ng-container *ngIf="app$ | async as app">
+  <div>
+    <qrcode [qrdata]="app.install_url" [imageSrc]="app.icon_file" [width]="256" [errorCorrectionLevel]="'M'" [cssClass]="'center'"></qrcode>
+  </div>
+  <a target="_blank" href="{{app.install_url}}">{{ app.install_url }}</a>
+</ng-container>

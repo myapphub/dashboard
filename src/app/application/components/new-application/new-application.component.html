@@ -13,7 +13,7 @@
         <label for="app-path" class="col-form-label">App path</label>
         <div class="input-group">
           <div class="input-group-text">{{ base_url }}</div>
-          <select class="form-select" id="inputGroupSelect01" formControlName="namespace">
+          <select class="form-select" id="namespace" formControlName="namespace">
             <option *ngIf="user" selected value="user">users/{{ user.username }}/apps/</option>
             <option *ngFor="let org of orgs" value="{{ org.path }}">orgs/{{ org.path }}/apps/</option>
           </select>

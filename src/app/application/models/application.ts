@@ -15,6 +15,7 @@ export interface Application {
   enable_os: string[];
   namespace: Namespace;
   install_slug: string;
+  install_url: string;
   icon_file: string;
   description: string;
   create_time: string;
