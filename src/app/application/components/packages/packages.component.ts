@@ -37,7 +37,9 @@ export class PackagesComponent implements OnInit {
   ngOnInit(): void {
     this.app$ = this.service.onAppChanged();
     this.app$.subscribe(app => {
-      this.active = app!.enable_os[0];
+      if (app) {
+        this.active = app!.enable_os[0];
+      }
     });
     this.packages$ = combineLatest([this.app$, this.page$]).pipe(
       distinctUntilChanged((pre, current) => pre[1]===current[1]),

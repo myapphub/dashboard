@@ -80,3 +80,11 @@ export interface Release {
   fingerprint: string;
   update_time: string;
 }
+
+export interface StoreAppVersion {
+  store: string;
+  display_name: string;
+  short_version: string;
+  update_time: string;
+  create_time: string;
+}

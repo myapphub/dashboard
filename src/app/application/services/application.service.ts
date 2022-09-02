@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
-import { Application, ApplicationRequest, Namespace, NamespaceKind, Package, Release } from '../models/application';
+import { Application, ApplicationRequest, Namespace, NamespaceKind, Package, Release, StoreAppVersion } from '../models/application';
 import { Pagination } from '../models/pagination';
 
 @Injectable({
@@ -145,4 +145,12 @@ export class ApplicationService {
       );    
   }
 
+  getStoresCurrentVersions(namespace: string, path: string): Observable<StoreAppVersion[]> {
+    let url = environment.external_api_url + `/${namespace}/apps/${path}/stores/current/versions`;
+    return this.http.get(url)
+      .pipe(map(res => {
+        return res as StoreAppVersion[];
+      }),
+    );
+  }
 }

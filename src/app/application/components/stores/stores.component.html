@@ -1,1 +1,23 @@
-<p>stores works!</p>
+<ng-container *ngIf="versions$ | async as versions">
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th scope="col">Store</th>
+        <th scope="col">Version</th>
+        <th scope="col">Update</th>
+        <th scope="col">Create</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of versions">
+        <th scope="row">{{ item.display_name }}</th>
+        <td>{{ item.short_version }}</td>
+        <td>{{ item.update_time | date:'short' }}</td>
+        <td>{{ item.create_time | date:'short' }}</td>
+      </tr>
+      </tbody>
+    </table>
+      
+  </div>
+</ng-container>

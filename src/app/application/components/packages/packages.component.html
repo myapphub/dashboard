@@ -51,6 +51,7 @@
                 <th scope="col">Version</th>
                 <th scope="col">Size</th>
                 <th scope="col">Uploader</th>
+                <th scope="col">Commit</th>
                 <th scope="col">Date</th>
               </tr>
               </thead>
@@ -64,6 +65,7 @@
                 <td>{{ item.short_version }}({{ item.version}})</td>
                 <td>{{ item.size | filesize }}</td>
                 <td>{{ item.uploader.name }}</td>
+                <td>{{ item.commit_id | slice:0:8 }}</td>
                 <td>{{ item.create_time | date:'short' }}</td>
               </tr>
               </tbody>

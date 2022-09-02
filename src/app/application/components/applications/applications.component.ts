@@ -21,7 +21,6 @@ export class ApplicationsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.namespace);
     if (this.namespace) {
       this.apps$ = this.service.getApps(this.namespace);
     } else {
