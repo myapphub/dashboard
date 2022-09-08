@@ -9,6 +9,7 @@ jobs:
   build-and-deploy:
     concurrency: ${{ github.workflow }}-${{ github.ref }}
     runs-on: ubuntu-latest
+    environment: github-pages
     permissions:
       contents: write
     steps:
@@ -17,9 +18,9 @@ jobs:
 
       - name: Install and Build 🔧
         run: |
+          echo "export const environment = {production: true, external_api_url: '${{ secrets.EXTERNAL_API_URL }}'};" > src/environments/environment.prod.ts
           npm install -g @angular/cli@13.3.5
           npm install
-          echo "export const environment = {production: true, external_api_url: 'https://api.apphub.work'};" > src/environments/environment.prod.ts
           ng build --configuration production
           cp dist/apphub/index.html dist/apphub/404.html
 
